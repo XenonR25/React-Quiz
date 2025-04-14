@@ -1,13 +1,13 @@
-import {initializeApp} from 'firebase/app'
+import { initializeApp } from "firebase/app";
 
-//
+//firebase config
 const app = initializeApp({
-    apiKey: "AIzaSyBleBuyouVFOeU4PjTW8A4zQptlHwFVcR4",
-  authDomain: "react-quiz-a3dd6.firebaseapp.com",
-  projectId: "react-quiz-a3dd6",
-  storageBucket: "react-quiz-a3dd6.firebasestorage.app",
-  messagingSenderId: "1055726711598",
-  appId: "1:1055726711598:web:224084336cb8767960c0bf"
-})
+  apiKey:  import.meta.env.VITE_REACT_APP_API_KEY,
+  authDomain:  import.meta.env.VITE_REACT_APP_AUTH_DOMAIN,
+  projectId:  import.meta.env.VITE_REACT_APP_PROJECT_ID,
+  storageBucket:  import.meta.env.VITE_REACT_APP_STORAGE_BUCKET,
+  messagingSenderId:  import.meta.env.VITE_REACT_APP_MESSAGING_SENDER_ID,
+  appId:  import.meta.env.VITE_REACT_APP_APP_ID,
+});
 
 export default app;
