@@ -11,7 +11,7 @@ import "../firebase";
 
 const AuthContext = React.createContext();
 
-export function useAuth() { //ekhon amra jekono jaigai useAuth likhe jekono jaiga theke eta access korte parbo
+export function useAuth() { //ekhon amra jekono jaigai useAuth likhe jekono jaiga theke eta access korte parbo 
   return useContext(AuthContext);
 }
 

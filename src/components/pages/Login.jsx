@@ -1,28 +1,12 @@
-import classes from "../../styles/Login.module.css";
-import Form from "../Form";
 import Illustration from "../Illustration";
-import TextInput from "../TextInput";
+import LoginFrom from "../LoginForm";
 export default function Login() {
   return (
     <>
       <h2>Login to your account</h2>
       <div className="column">
         <Illustration />
-        <Form className={`${classes.login}`}>
-          <TextInput
-            type="text"
-            placeholder="Enter email"
-            icon="alternate_email"
-          />
-          <TextInput
-            type="text"
-            placeholder="Enter email"
-            icon="alternate_email"
-          />
-          <Button><span>Submit Now</span></Button>
-          <div className="info">Don't have an account? <a href="signup.html">Signup</a> instead.</div>
-        </Form>
-
+        <LoginFrom />
       </div>
     </>
   );
