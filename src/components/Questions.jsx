@@ -1,13 +1,13 @@
 import Answers from "./Answers";
 import classes from "../styles/Question.module.css"
-export default function Question(){
-    return(
-        <div className={classes.question}>
+export default function Questions({answers = []}){
+    return answers.map((answer, index) => (
+        <div className={classes.question} key={index}>
             <div className={classes.qtitle}>
                 <span className="material-icons-outlined">help-outline</span>
-                Here goes the question from the LWR
+               {answer.title}
             </div>
             <Answers/>
         </div>
-    );
-}
+        ))
+};
