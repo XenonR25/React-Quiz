@@ -87,7 +87,7 @@ export default function Quiz() {
     });
     history.push({
       pathname: `result/${id}`,
-      state:{qna,}
+      state:{qna: qna}
     });
   }
   return (
@@ -101,9 +101,11 @@ export default function Quiz() {
           <Answers
             options={qna[currentQuestion].options}
             handleChange={handleAnswerChange}
+            input={true}
           />
-          <ProgressBar next={nextQuestion} previous={previousQuestion}/> progress={progressPercentage} submit= [submitQuestion]
-          <MiniPlayer />
+          <ProgressBar next={nextQuestion} previous={previousQuestion} progress={progressPercentage} submit = {submitQuestion} />
+
+          <MiniPlayer title={qna[currentQuestion].title} id={id} />
         </>
       )}
     </>

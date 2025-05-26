@@ -39,7 +39,7 @@ export default function Result() {
       {answers && answers.length > 0 (
         <>
           <Summary score={userScore} noq={answers.length}/>
-          <Analysis answers={answers}/>
+          <Analysis input={false} answers={answers}/>
         </>
       )}
     </>
