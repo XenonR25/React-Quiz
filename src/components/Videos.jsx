@@ -20,7 +20,7 @@ export default function Videos() {
               <Link
                 to={{
                   pathname: `/quiz/${video.youtubeID}`,
-                  state: { videoTitle: video.title },
+                  state: { videoTitle: video.title, noq: video.noq },
                 }}
                 key={video.youtubeID}
               >

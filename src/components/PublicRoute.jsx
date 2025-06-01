@@ -1,13 +1,12 @@
-import { Route } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 
-// eslint-disable-next-line no-unused-vars
-export default function PublicRoute({ component: Component, ...rest }) {
+export default function PublicRoute({ children }) {
   const { currentUser } = useAuth();
-
-  return !currentUser ? (
-    <Route {...rest}>{(props) => <Component {...props} />}</Route> //render props applied in here
-  ) : (
-    <Redirect to="/" />
-  );
+  
+  if (currentUser) {
+    return <Navigate to="/" replace />;
+  }
+  
+  return children;
 }

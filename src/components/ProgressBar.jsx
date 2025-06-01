@@ -23,7 +23,7 @@ export default function ProgressBar({ next, previous, submit, progress }) {
       <div className={classes.rangeArea}>
         <div className={classes.tooltip} ref={tooltipRef}>
           {" "}
-          ${progress}% Complete!
+          {progress}% Complete!
         </div>
         <div className={classes.rangeBody}>
           <div

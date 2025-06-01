@@ -6,6 +6,13 @@ export default function MiniPlayer({ id, title }) {
   const buttonRef = useRef(null);
   const [status, setStatus] = useState(false);
   const videoURL = `https://www.youtube.com/watch?v=${id}`;
+
+  // Fix: Create the correct origin URL based on current environment
+  const currentOrigin =
+    window.location.hostname === "localhost"
+      ? "http://localhost:5173"
+      : window.location.origin;
+
   function toggleMiniPlayer() {
     if (!status) {
       buttonRef.current.classList.remove(classes.floatingBtn);
@@ -15,6 +22,7 @@ export default function MiniPlayer({ id, title }) {
       setStatus(false);
     }
   }
+
   return (
     <div
       className={`${classes.miniPlayer} ${classes.floatingBtn}`}
@@ -22,23 +30,37 @@ export default function MiniPlayer({ id, title }) {
       onClick={toggleMiniPlayer}
     >
       <span className={`material-icons-outlined ${classes.open}`}>
-        {" "}
-        play_circle_filled{" "}
+        play_circle_filled
       </span>
       <span
-        className={`material-icons-outlined ${close}`}
-        onClick={toggleMiniPlayer}
+        className={`material-icons-outlined ${classes.close}`}
+        onClick={(e) => {
+          e.stopPropagation();
+          toggleMiniPlayer();
+        }}
       >
-        {" "}
-        close{" "}
+        close
       </span>
-      <ReactPlayer
-        className={classes.player}
-        url={videoURL}
-        width="300px"
-        height="168px"
-        playing={status}
-      />
+      {status && (
+        <ReactPlayer
+          className={classes.player}
+          url={videoURL}
+          width="300px"
+          height="168px"
+          playing={status}
+          config={{
+            youtube: {
+              playerVars: {
+                origin: currentOrigin, // Use dynamically determined origin
+                enablejsapi: 1,
+                modestbranding: 1,
+                rel: 0,
+                widget_referrer: currentOrigin, // Additional parameter for iframe API
+              },
+            },
+          }}
+        />
+      )}
       <p>{title}</p>
     </div>
   );

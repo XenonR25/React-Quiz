@@ -1,17 +1,16 @@
-/* eslint-disable no-unused-vars */
 // import classes from "../../styles/Quiz.module.css"
-import { useEffect, useReducer, useState } from "react";
+import { getDatabase, ref, set } from "firebase/database";
 import _ from "lodash";
-import { useParams, useHistory } from "react-router-dom";
+import { useEffect, useReducer, useState } from "react";
+import {  useNavigate, useParams } from "react-router-dom";
+// import { useLocation } from "react-router-dom"; 
+import { useAuth } from "../../contexts/AuthContext";
 import useQuestions from "../../hooks/useQuestions";
 import Answers from "../Answers";
-import MiniPlayer from "../MiniPlayer ";
-import { useAuth } from "../../contexts/AuthContext";
 import ProgressBar from "../ProgressBar";
-import { ref, getDatabase, set } from "firebase/database"; 
+import MiniPlayer from "../MiniPlayer";
 
-
-const initialState = null;
+const initialState = [];
 const reducer = (state, action) => {
   switch (action.type) {
     case "questions":
@@ -37,20 +36,24 @@ export default function Quiz() {
   const { loading, error, questions } = useQuestions(id);
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [qna, dispatch] = useReducer(reducer, initialState);
-  const {currentUser} = useAuth();
-  const history = useHistory();
-  const location = history;
-  const { state } = location;
-  const {videoTitle} = state;
-
+  const { currentUser } = useAuth();
+  const navigate = useNavigate();
+  // const location = useLocation();
+  // const { state } = location;
+  // const { videoTitle = "Default title" } = state;
 
   //useEffect to set questions when they are fetched
+
+
   useEffect(() => {
+    if(questions?.length){
     dispatch({
       type: "questions",
       value: questions,
-    });
+    });}
   }, [questions]);
+
+ 
 
   function handleAnswerChange(e, index) {
     dispatch({
@@ -70,27 +73,32 @@ export default function Quiz() {
 
   //handle when user clicks previous question
   function previousQuestion() {
-    if (currentQuestion > 0 && currentQuestion < questions.length ) {
+    if (currentQuestion > 0 && currentQuestion < questions.length) {
       setCurrentQuestion((prevCurrent) => prevCurrent - 1);
     }
   }
   //calculate progress percentage
-  const progressPercentage = questions.length>0 ? Math.round(
-    ((currentQuestion + 1) / questions.length) * 100 
-  ): 0;
+  const progressPercentage =
+    questions.length > 0
+      ? Math.round(((currentQuestion + 1) / questions.length) * 100)
+      : 0;
 
   //submit the quiz
-  async function submitQuestion(){
-    const {uid} = currentUser;
+  async function submitQuestion() {
+    const { uid } = currentUser;
     const db = getDatabase();
     const resultRef = ref(db, `result/${uid}`);
 
     await set(resultRef, {
-      [id]: qna
+      [id]: qna,
     });
-    history.push({
-      pathname: `result/${id}`,
-      state:{qna: qna}
+
+
+    navigate({
+      pathname: `/result/${id}`,
+      state: {
+        qna: qna,
+      },
     });
   }
   return (
@@ -106,9 +114,14 @@ export default function Quiz() {
             handleChange={handleAnswerChange}
             input={true}
           />
-          <ProgressBar next={nextQuestion} previous={previousQuestion} progress={progressPercentage} submit = {submitQuestion} />
+          <ProgressBar
+            next={nextQuestion}
+            previous={previousQuestion}
+            progress={progressPercentage}
+            submit={submitQuestion}
+          />
 
-          <MiniPlayer title={videoTitle} id={id} />
+          <MiniPlayer title={currentQuestion.title} id={id} />
         </>
       )}
     </>

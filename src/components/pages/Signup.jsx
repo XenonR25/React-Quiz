@@ -1,5 +1,6 @@
 import Checkbox from "../Checkbox";
 import SignupForm from "../SignupForm";
+import Illustration from "../Illustration";
 
 export default function Signup() {
   return (

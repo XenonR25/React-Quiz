@@ -47,9 +47,9 @@ export default function useVideoList(page) {
         setError(true); //if error occurs then set the error state to true
       }
     }
-    setTimeout(() => {
+    
       fetchVideos();
-    }, 2000); //1 second er jonne loading state ta true thakbe
+     //1 second er jonne loading state ta true thakbe
   }, [page]);
 
 

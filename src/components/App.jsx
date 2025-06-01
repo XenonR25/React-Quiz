@@ -1,4 +1,4 @@
-import { Route, BrowserRouter as Router, Switch } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "../contexts/AuthContext";
 import "../styles/App.css";
 import Layout from "./Layout";
@@ -10,24 +10,57 @@ import Signup from "./pages/Signup";
 import PrivateRoute from "./PrivateRoute";
 import PublicRoute from "./PublicRoute";
 
-
 function App() {
   return (
-    <>
-      <Router>
-        <AuthProvider>
-          <Layout>
-            <Switch>
-              <Route exact path="/" component={Home} />
-              <PublicRoute exact path="/signup" component={Signup} />
-              <PublicRoute exact path="/login" component={Login} />
-              <PrivateRoute exact path="/quiz/:id" component={Quiz} />
-              <PrivateRoute exact path="/result/:id" component={Result} />
-            </Switch>
-          </Layout>
-        </AuthProvider>
-      </Router>
-    </>
+    <Router>
+      <AuthProvider>
+        <Layout>
+          <Routes>
+            {/* Public Routes */}
+            <Route path="/" element={<Home />} />
+            
+            <Route
+              path="/signup"
+              element={
+                <PublicRoute>
+                  <Signup />
+                </PublicRoute>
+              }
+            />
+            
+            <Route
+              path="/login"
+              element={
+                <PublicRoute>
+                  <Login />
+                </PublicRoute>
+              }
+            />
+
+            {/* Private Routes */}
+            <Route
+              path="/quiz/:id"
+              element={
+                <PrivateRoute>
+                  <Quiz />
+                </PrivateRoute>
+              }
+            />
+
+            <Route
+              path="/result/:id"
+              element={
+                <PrivateRoute>
+                  <Result />
+                </PrivateRoute>
+              }
+            />
+
+            {/* Add more routes as needed */}
+          </Routes>
+        </Layout>
+      </AuthProvider>
+    </Router>
   );
 }
 

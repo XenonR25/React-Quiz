@@ -1,4 +1,5 @@
 import { useAuth } from "../contexts/AuthContext";
+import { Link } from "react-router-dom";
 import classes from "../styles/Account.module.css";
 export default function Account() {
   const { currentUser, logout } = useAuth();
@@ -10,7 +11,7 @@ export default function Account() {
             account_circle
           </span>
           <span>{currentUser.displayName}</span>
-          <span class="material-icons-outlined" title="Logout" onClick = {logout}>
+          <span className ="material-icons-outlined" title="Logout" onClick = {logout}>
             {" "}
             logout{" "}
           </span>{" "}
